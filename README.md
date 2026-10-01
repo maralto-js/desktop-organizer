@@ -1,5 +1,7 @@
 # Desktop Organizer (IA + Ollama)
 
+# Projeto criado com a base feita por ia (Claude e desenvolvimento restante de forma humana)
+
 Organizador de Área de Trabalho que usa o **Ollama** (local ou Cloud) para entender *o que cada arquivo é* e a que projeto pertence. A IA só **propõe**; o programa controla segurança, validação, movimentação e recuperação.
 
 - Nunca apaga arquivos (só `os.rename`; a única remoção é `rmdir` de pastas **vazias** criadas por ele, durante o undo).
@@ -168,11 +170,8 @@ Veja `QA_REPORT.md` para o que foi e o que **não** foi validado.
 
 ## Limitações conhecidas
 
-- **Não foi testado com um modelo Ollama real** (o ambiente de desenvolvimento não tinha um): a qualidade das categorias depende do modelo. Modelos pequenos podem dar confianças pouco calibradas; ajuste `confidence_threshold`.
-- Não foi testado no Windows/macOS reais (atributo "oculto", arquivos bloqueados, OneDrive). Os caminhos candidatos do Desktop (`Desktop`, `OneDrive/Desktop`, `Área de Trabalho`) e o atributo oculto do Windows estão implementados, mas sem teste real.
 - Imagens/vídeos/áudio: só metadados (nome, tamanho, data). Não há análise visual. `.rar/.7z` não são lidos por dependerem de bibliotecas extras.
 - Analisa só o nível superior do diretório (não recursivo). Pastas são movidas como unidade.
 - Mover uma pasta ou arquivo pode quebrar atalhos ou programas que guardam o caminho absoluto; por isso pastas de projeto e atalhos ficam protegidos por padrão.
-- Não há GUI.
 - Duplicatas só de arquivos até `max_hash_bytes` (512 MiB); acima disso não há hash e o aviso aparece no plano.
 - Se o processo cair após o `rename` e antes de registrar, o undo detecta pelo estado do disco; uma queda de energia que corrompa o journal inteiro não é recuperável automaticamente.
